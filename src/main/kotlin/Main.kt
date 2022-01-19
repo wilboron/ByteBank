@@ -1,5 +1,26 @@
 fun main() {
     println("Bem vindo ao ByteBank")
+    val contaWill = Conta()
+    contaWill.numero = 200
+    contaWill.titular = "William"
+    contaWill.saldo = 200.0
+
+    val contaAna = Conta()
+    contaAna.numero = 200
+    contaAna.titular = "William"
+    contaAna.saldo = 200.0
+
+    println(contaWill)
+    println(contaAna)
+}
+
+class Conta {
+    var titular = ""
+    var numero = 0
+    var saldo = 0.0
+}
+
+fun testaLacos() {
     var i = 0
     while (i < 5) {
         val titular = "William $i"
@@ -51,9 +72,7 @@ fun testaCondicoes(saldo: Double) {
 //            println("Conta é negativa")
 //        }
 //    }
-}
-
-//    testaCondicoes(saldo)
+    //    testaCondicoes(saldo)
 
 //    for (i in 1..3) println(i)
 //    for (i in 1..3) {
@@ -63,3 +82,4 @@ fun testaCondicoes(saldo: Double) {
 //        println(i)
 //        println(i + 1)
 //    }
+}

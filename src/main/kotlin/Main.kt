@@ -1,23 +1,102 @@
+import java.math.BigDecimal
+
 fun main() {
     println("Bem vindo ao ByteBank")
     val contaWill = Conta()
     contaWill.numero = 200
     contaWill.titular = "William"
-    contaWill.saldo = 200.0
+    contaWill.deposita(200.0)
 
     val contaAna = Conta()
     contaAna.numero = 200
     contaAna.titular = "William"
-    contaAna.saldo = 200.0
+    contaAna.deposita(200.0)
 
     println(contaWill)
     println(contaAna)
+
+    println("Depositando na conta do William")
+//    contaWill.saldo += 50.0
+    contaWill.deposita(50.0)
+    println(contaWill.saldo)
+
+    println("Depositando na conta da Ana")
+//    deposita(contaAna, 50.0)
+//    deposita(contaAna, BigDecimal(50.0))
+    contaAna.deposita(50.0)
+
+    println(contaAna.saldo)
+    contaAna.saca(50.0)
+    try {
+        contaAna.saca(500000.0)
+    } catch (e: Conta.InsufficientFunds) {
+        println("Não tem saldo!")
+    }
+
+    println(contaAna.saldo)
+    println(contaWill.saldo)
+    if (contaWill.transfere(150.0, contaAna)) {
+        println("Transferência sucedida!")
+    } else {
+        println("Falha na transferência")
+    }
+    println(contaAna.saldo)
+    println(contaWill.saldo)
+}
+
+
+fun deposita(conta: Conta, valor: BigDecimal) {
+    conta.saldoDec += valor
 }
 
 class Conta {
     var titular = ""
     var numero = 0
     var saldo = 0.0
+        private set(valor) {
+            if (valor > 0) field = valor
+        }
+    var saldoDec = BigDecimal("0.0")
+
+
+    fun deposita(valor: Double) {
+        saldo += valor
+    }
+
+    fun saca(valor: Double) {
+        if (saldo < valor) throw InsufficientFunds()
+        saldo -= valor
+    }
+
+    fun transfere(valor: Double, destino: Conta): Boolean {
+        if (saldo < valor) return false
+        saldo -= valor
+        destino.deposita(valor)
+        return true
+    }
+
+//    fun getSaldo() = saldo
+//    fun setSaldo(valor: Double) {
+//        saldo = valor
+//    }
+
+    class InsufficientFunds : Exception("Fundos insuficientes.")
+}
+
+
+fun testaCopiasEReferencias() {
+//    val contaWill = Conta()
+//    contaWill.numero = 200
+//    contaWill.titular = "William"
+//    contaWill.saldo = 200.0
+//
+//    val contaAna = Conta()
+//    contaAna.numero = 200
+//    contaAna.titular = "William"
+//    contaAna.saldo = 200.0
+//
+//    println(contaWill)
+//    println(contaAna)
 }
 
 fun testaLacos() {
